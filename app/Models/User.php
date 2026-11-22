@@ -38,18 +38,20 @@ final class User
     /** @return int the user's id; throws ApiError on a wrong password or a locked account */
     public function authenticate(string $username, string $password): int
     {
-        $user = $this->db->run('SELECT id, password_hash, locked_until FROM users WHERE username = ?', [$username])->fetch();
-        if ($user && $user['locked_until'] > time()) {
-            throw new ApiError(429, 'too many wrong passwords, try again in a few minutes');
+        $user = $this->db->run('SELECT id, password_hash FROM users WHERE username = ?', [$username])->fetch();
+        if ($user) {
+            // Count this attempt BEFORE checking the password, in one statement the database runs atomically
+            // per row: parallel guesses cannot all slip past a lock check. A locked account matches no row.
+            // (locked_until is assigned first: MySQL evaluates the assignments left to right.)
+            $counted = $this->db->run('UPDATE users SET locked_until = IF(failed_logins + 1 >= ?, ?, 0), failed_logins = IF(failed_logins + 1 >= ?, 0, failed_logins + 1) WHERE id = ? AND locked_until <= ?',
+                [self::MAX_FAILURES, time() + self::LOCK_SECONDS, self::MAX_FAILURES, $user['id'], time()])->rowCount();
+            $counted === 1 || throw new ApiError(429, 'too many wrong passwords, try again in a few minutes');
         }
+        // Always one password_verify, so an unknown name costs the same time as a wrong password.
         if (!password_verify($password, $user['password_hash'] ?? self::DUMMY_HASH) || !$user) {
-            if ($user) {  // locked_until is set first: MySQL evaluates the assignments left to right
-                $this->db->run('UPDATE users SET locked_until = IF(failed_logins + 1 >= ?, ?, 0), failed_logins = IF(failed_logins + 1 >= ?, 0, failed_logins + 1) WHERE id = ?',
-                    [self::MAX_FAILURES, time() + self::LOCK_SECONDS, self::MAX_FAILURES, $user['id']]);
-            }
             throw new ApiError(401, 'wrong username or password');  // same answer for "no such user" and "wrong password"
         }
-        $this->db->run('UPDATE users SET failed_logins = 0 WHERE id = ?', [$user['id']]);
+        $this->db->run('UPDATE users SET failed_logins = 0, locked_until = 0 WHERE id = ?', [$user['id']]);
         return (int) $user['id'];
     }
 }

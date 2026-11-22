@@ -63,8 +63,11 @@ final class ChatServer
     {
         $token = $upgrade->request->cookie(AuthController::COOKIE) ?? '';
         $user = $this->sessions->userFor($token);
+        if ($user === null) {
+            return 401;  // nothing is remembered for a refused upgrade: it never opens, so nothing would clear it
+        }
         $this->pending[$upgrade->conn] = ['user' => $user, 'token' => $token];  // the question's id is the connection's id
-        return $user === null ? 401 : true;
+        return true;
     }
 
     private function opened(Connection $conn): void
