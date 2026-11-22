@@ -1,0 +1,40 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        php: ['8.2', 'latest']
+    services:
+      db:
+        image: mariadb:11.4
+        env:
+          MARIADB_ROOT_PASSWORD: root-only-for-ci
+          MARIADB_DATABASE: chat_test
+          MARIADB_USER: chat
+          MARIADB_PASSWORD: chat-local-dev
+        ports: ['3307:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=3s --health-timeout=3s --health-retries=30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ffi, pdo_mysql, pcntl
+          tools: composer
+      - run: composer install --no-interaction
+      - run: vendor/bin/wsrv-install-lib --version=0.1.0-rc.1 --dir=lib
+      - name: Create the tables
+        run: php -r '$p = new PDO("mysql:host=127.0.0.1;port=3307;dbname=chat_test", "chat", "chat-local-dev"); $p->exec(file_get_contents("database/schema.sql"));'
+      - run: php tests/run.php
+        env:
+          CI: 'true'

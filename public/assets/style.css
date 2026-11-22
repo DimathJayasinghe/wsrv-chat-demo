@@ -1,0 +1,18 @@
+:root { color-scheme: light dark; --line: #8886; --accent: #2457d6; }
+[hidden] { display: none !important; }
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+main { max-width: 680px; margin: 0 auto; padding: 24px 16px; }
+section, form { border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+#auth { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); border: 0; padding: 0; }
+#auth form { margin: 0; }
+h1 { font-size: 1.4rem; } h2 { font-size: 1.05rem; margin-top: 0; }
+label { display: block; margin-bottom: 10px; }
+input { display: block; box-sizing: border-box; width: 100%; padding: 8px; font: inherit; }
+button { padding: 8px 14px; font: inherit; color: #fff; background: var(--accent); border: 0; border-radius: 6px; cursor: pointer; }
+header { display: flex; justify-content: space-between; align-items: center; }
+#online, small { color: #888; }
+#messages { list-style: none; margin: 0 0 12px; padding: 8px; height: 320px; overflow-y: auto; border: 1px solid var(--line); border-radius: 6px; }
+#messages li { overflow-wrap: anywhere; }
+#messages time { color: #888; font-size: .8rem; margin-right: 6px; }
+#send-form { display: flex; gap: 8px; padding: 0; border: 0; margin: 0; }
+.error { color: #c0392b; }

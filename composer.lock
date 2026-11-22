@@ -1,0 +1,66 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "9285db1f3813604d93d5fe385b00106a",
+    "packages": [
+        {
+            "name": "wsrv/client",
+            "version": "v0.1.0-rc.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DimathJayasinghe/wsrv.git",
+                "reference": "d3b56cff95b1f48a9ad21536d94c17ae2e38774d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DimathJayasinghe/wsrv/zipball/d3b56cff95b1f48a9ad21536d94c17ae2e38774d",
+                "reference": "d3b56cff95b1f48a9ad21536d94c17ae2e38774d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "suggest": {
+                "ext-ffi": "Needed only for the embedded server, Wsrv\\Embedded\\Server (PHP CLI); the sidecar client does not use it",
+                "ext-pcntl": "Needed only for signal handling in worker scripts (see the echo example in bindings/php/examples)"
+            },
+            "bin": [
+                "bindings/php/bin/wsrv-install-lib"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wsrv\\": "bindings/php/src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "PHP client for the wsrvd WebSocket sidecar (IPC protocol v0) and an embedded server over FFI. Works on every PHP stack; the sidecar client is pure PHP.",
+            "support": {
+                "issues": "https://github.com/DimathJayasinghe/wsrv/issues",
+                "source": "https://github.com/DimathJayasinghe/wsrv/tree/v0.1.0-rc.1"
+            },
+            "time": "2026-11-22T15:04:07+00:00",
+            "published-time": "2026-11-22T15:09:37+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "wsrv/client": 5
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=8.2",
+        "ext-ffi": "*"
+    },
+    "platform-dev": {},
+    "plugin-api-version": "2.11.0"
+}

@@ -1,0 +1,23 @@
+# The database only. The web app and the chat server run on your machine (they need PHP with FFI).
+services:
+  db:
+    image: mariadb:11.4
+    container_name: wsrv-chat-demo-db
+    environment:
+      MARIADB_ROOT_PASSWORD: root-only-for-local-dev
+      MARIADB_DATABASE: chat
+      MARIADB_USER: chat
+      MARIADB_PASSWORD: chat-local-dev
+    ports:
+      - "127.0.0.1:3307:3306"       # not 3306: that one is often taken by a MySQL on your machine
+    volumes:
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/10-schema.sql:ro
+      - ./database/test-database.sql:/docker-entrypoint-initdb.d/20-test-database.sql:ro
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+volumes:
+  dbdata:
