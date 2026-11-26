@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9285db1f3813604d93d5fe385b00106a",
+    "content-hash": "d640cb42c4b2b4833dda0ecc5b381009",
     "packages": [
         {
             "name": "wsrv/client",
-            "version": "v0.1.0-rc.1",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DimathJayasinghe/wsrv.git",
-                "reference": "d3b56cff95b1f48a9ad21536d94c17ae2e38774d"
+                "reference": "4317d454c9ee6c3f5f748ac734528537f4d9c5c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DimathJayasinghe/wsrv/zipball/d3b56cff95b1f48a9ad21536d94c17ae2e38774d",
-                "reference": "d3b56cff95b1f48a9ad21536d94c17ae2e38774d",
+                "url": "https://api.github.com/repos/DimathJayasinghe/wsrv/zipball/4317d454c9ee6c3f5f748ac734528537f4d9c5c7",
+                "reference": "4317d454c9ee6c3f5f748ac734528537f4d9c5c7",
                 "shasum": ""
             },
             "require": {
@@ -43,23 +43,22 @@
             "description": "PHP client for the wsrvd WebSocket sidecar (IPC protocol v0) and an embedded server over FFI. Works on every PHP stack; the sidecar client is pure PHP.",
             "support": {
                 "issues": "https://github.com/DimathJayasinghe/wsrv/issues",
-                "source": "https://github.com/DimathJayasinghe/wsrv/tree/v0.1.0-rc.1"
+                "source": "https://github.com/DimathJayasinghe/wsrv/tree/v1.0.0"
             },
-            "time": "2026-11-22T15:04:07+00:00",
-            "published-time": "2026-11-22T15:09:37+00:00"
+            "time": "2026-11-26T09:26:11+00:00",
+            "published-time": "2026-11-26T09:45:45+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wsrv/client": 5
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.2",
-        "ext-ffi": "*"
+        "ext-ffi": "*",
+        "ext-pdo_mysql": "*"
     },
     "platform-dev": {},
     "plugin-api-version": "2.11.0"
