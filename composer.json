@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.2",
         "ext-ffi": "*",
-        "wsrv/client": "0.1.0-rc.1",
+        "wsrv/client": "^1.0",
         "ext-pdo_mysql": "*"
     },
     "autoload": {
@@ -15,7 +15,7 @@
         }
     },
     "scripts": {
-        "install-lib": "wsrv-install-lib --version=0.1.0-rc.1 --dir=lib",
+        "install-lib": "wsrv-install-lib --dir=lib",
         "serve": "php -S 127.0.0.1:8000 -t public public/index.php",
         "chat": "php bin/chat-server.php",
         "test": "php tests/run.php",

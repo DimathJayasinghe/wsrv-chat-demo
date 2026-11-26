@@ -32,7 +32,7 @@ jobs:
           extensions: ffi, pdo_mysql, pcntl
           tools: composer
       - run: composer install --no-interaction
-      - run: vendor/bin/wsrv-install-lib --version=0.1.0-rc.1 --dir=lib
+      - run: vendor/bin/wsrv-install-lib --dir=lib
       - name: Create the tables
         run: php -r '$p = new PDO("mysql:host=127.0.0.1;port=3307;dbname=chat_test", "chat", "chat-local-dev"); $p->exec(file_get_contents("database/schema.sql"));'
       - run: php tests/run.php
